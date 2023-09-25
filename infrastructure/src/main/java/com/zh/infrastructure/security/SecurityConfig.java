@@ -63,7 +63,7 @@ public class SecurityConfig {
                                 .requestMatchers("/studio/*/page").permitAll()
                                 .requestMatchers("/studio/*/getById").permitAll()
                                 .requestMatchers("/studio/*/*/page").permitAll()
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .logout(logout -> logout.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler()))
                 .securityContext(context -> context.securityContextRepository(securityContextRepository()));
