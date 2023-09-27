@@ -7,5 +7,4 @@ public class Amount {
     private String id;
     private Integer value;
     private String unit;
-    private String unitName;
 }
