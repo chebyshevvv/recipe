@@ -20,4 +20,8 @@ public class RecipeController {
         recipes.add(recipe);
         return HttpResult.ok();
     }
+    @GetMapping("listByListId")
+    public HttpResult listByListId(String listId){
+        return HttpResult.ok(recipes);
+    }
 }
