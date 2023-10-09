@@ -25,7 +25,7 @@ public class IngredientController {
             map.put(typeName,list);
             for (int j = 0; j < 5; j++) {
                 Ingredient ingredient = new Ingredient();
-                ingredient.setId(IdUtil.getSnowflakeNextIdStr());
+                ingredient.setId(i + "" + j);
                 ingredient.setName("dd" + i + j);
                 ingredient.setType(type);
                 ingredient.setTypeName(typeName);
