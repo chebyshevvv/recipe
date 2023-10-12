@@ -32,6 +32,7 @@ public class NativeImageStore {
 
                 buffer.flip();
                 channel.write(buffer);
+                buffer.clear();
             }else if (i == fileBytes.length -1){
 
                 buffer.flip();
