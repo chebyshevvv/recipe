@@ -1,5 +1,6 @@
 package com.zh.core.controller;
 
+import cn.hutool.core.util.IdUtil;
 import com.zh.common.http.HttpResult;
 import com.zh.core.model.Recipe;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +16,13 @@ public class RecipeController {
     public HttpResult recipes(){
         return HttpResult.ok(recipes);
     }
+    @GetMapping("{id}")
+    public HttpResult recipes(@PathVariable String id){
+        return HttpResult.ok(recipes.stream().filter(r->r.getId().equals(id)).findAny().get());
+    }
     @PostMapping("add")
     public HttpResult add(@RequestBody Recipe recipe){
+        recipe.setId(IdUtil.getSnowflakeNextIdStr());
         recipes.add(recipe);
         return HttpResult.ok();
     }
