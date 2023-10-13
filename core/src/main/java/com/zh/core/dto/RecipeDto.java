@@ -17,6 +17,8 @@ public class RecipeDto {
     public static class RecipeIngredientDto{
         private String id;
         private String ingredientId;
+        private String name;
+        private String image;
         private Double amount;
         private String unit;
     }
