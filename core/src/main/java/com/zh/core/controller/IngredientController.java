@@ -30,7 +30,7 @@ public class IngredientController {
                 ingredient.setType(type);
                 ingredient.setTypeName(typeName);
                 ingredient.setDescription("ss");
-                ingredient.setImage("images/th.jpg");
+                ingredient.setImage("20231011141758th.jpg");
                 list.add(ingredient);
             }
         }

@@ -1,33 +1,30 @@
 package com.zh.core.controller;
 
-import cn.hutool.core.util.IdUtil;
 import com.zh.common.http.HttpResult;
-import com.zh.core.model.Recipe;
+import com.zh.core.dto.RecipeDto;
+import com.zh.core.service.RecipeService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("recipe")
 public class RecipeController {
-    private final List<Recipe> recipes = new ArrayList<>();
+    private final RecipeService service;
+
+    public RecipeController(RecipeService service) {
+        this.service = service;
+    }
+
     @GetMapping("list")
     public HttpResult recipes(){
-        return HttpResult.ok(recipes);
+        return HttpResult.ok(this.service.list());
     }
     @GetMapping("{id}")
     public HttpResult recipes(@PathVariable String id){
-        return HttpResult.ok(recipes.stream().filter(r->r.getId().equals(id)).findAny().get());
+        return HttpResult.ok(this.service.getById(id));
     }
     @PostMapping("add")
-    public HttpResult add(@RequestBody Recipe recipe){
-        recipe.setId(IdUtil.getSnowflakeNextIdStr());
-        recipes.add(recipe);
+    public HttpResult add(@RequestBody RecipeDto dto){
+        this.service.save(dto);
         return HttpResult.ok();
-    }
-    @GetMapping("listByListId")
-    public HttpResult listByListId(String listId){
-        return HttpResult.ok(recipes);
     }
 }
