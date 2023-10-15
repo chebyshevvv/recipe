@@ -1,10 +1,13 @@
 package com.zh.core.service.impl;
 
+import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.IdUtil;
 import com.zh.core.dto.RecipeDto;
+import com.zh.core.model.Ingredient;
 import com.zh.core.model.Recipe;
 import com.zh.core.model.RecipeIngredient;
 import com.zh.core.model.RecipeStep;
+import com.zh.core.repository.IngredientRepository;
 import com.zh.core.repository.RecipeIngredientRepository;
 import com.zh.core.repository.RecipeRepository;
 import com.zh.core.repository.RecipeStepRepository;
@@ -19,15 +22,21 @@ public class RecipeServiceImpl implements RecipeService {
     private final RecipeRepository repository;
     private final RecipeIngredientRepository recipeIngredientRepository;
     private final RecipeStepRepository stepRepository;
+    private final IngredientRepository ingredientRepository;
 
-    public RecipeServiceImpl(RecipeRepository repository, RecipeIngredientRepository recipeIngredientRepository, RecipeStepRepository stepRepository) {
+    public RecipeServiceImpl(RecipeRepository repository, RecipeIngredientRepository recipeIngredientRepository, RecipeStepRepository stepRepository, IngredientRepository ingredientRepository) {
         this.repository = repository;
         this.recipeIngredientRepository = recipeIngredientRepository;
         this.stepRepository = stepRepository;
+        this.ingredientRepository = ingredientRepository;
     }
 
     @Override
     public void save(RecipeDto dto) {
+        Validator.validateNotEmpty(dto.getName(),"标题不能为空");
+        Validator.validateNotEmpty(dto.getDescription(),"描述不能为空");
+        Validator.validateNotEmpty(dto.getImage(),"成品图不能为空");
+
         Recipe recipe = new Recipe();
         recipe.setId(IdUtil.getSnowflakeNextIdStr());
         recipe.setName(dto.getName());
@@ -36,6 +45,10 @@ public class RecipeServiceImpl implements RecipeService {
 
         List<RecipeIngredient> ingredientList = new ArrayList<>(dto.getIngredients().size());
         for (RecipeDto.RecipeIngredientDto ingredient : dto.getIngredients()) {
+            Validator.validateNotEmpty(ingredient.getIngredientId(),"食材id不能为空");
+            Validator.validateNotEmpty(ingredient.getAmount(),"数量不能为空");
+            Validator.validateNotEmpty(ingredient.getUnit(),"单位不能为空");
+
             RecipeIngredient recipeIngredient = new RecipeIngredient();
             recipeIngredient.setId(IdUtil.getSnowflakeNextIdStr());
             recipeIngredient.setRecipeId(recipe.getId());
@@ -47,6 +60,9 @@ public class RecipeServiceImpl implements RecipeService {
 
         List<RecipeStep> stepList = new ArrayList<>(dto.getSteps().size());
         for (RecipeDto.RecipeStepDto step : dto.getSteps()) {
+            Validator.validateNotEmpty(step.getTitle(),"步骤描述不能为空");
+            Validator.validateNotEmpty(step.getImage(),"步骤图片不能为空");
+
             RecipeStep recipeStep = new RecipeStep();
             recipeStep.setId(IdUtil.getSnowflakeNextIdStr());
             recipeStep.setRecipeId(recipe.getId());
@@ -77,6 +93,9 @@ public class RecipeServiceImpl implements RecipeService {
                     RecipeDto.RecipeIngredientDto d = new RecipeDto.RecipeIngredientDto();
                     d.setId(i.getId());
                     d.setIngredientId(i.getIngredientId());
+                    Ingredient ing = ingredientRepository.getById(i.getIngredientId());
+                    d.setName(ing.getName());
+                    d.setImage(ing.getImage());
                     d.setAmount(i.getAmount());
                     d.setUnit(i.getUnit());
                     return d;
