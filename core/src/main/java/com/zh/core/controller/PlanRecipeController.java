@@ -23,4 +23,8 @@ public class PlanRecipeController {
         this.service.save(recipe);
         return HttpResult.ok();
     }
+    @GetMapping("ingredients")
+    public HttpResult todayIngredients(){
+        return HttpResult.ok(this.service.todayIngredients());
+    }
 }
