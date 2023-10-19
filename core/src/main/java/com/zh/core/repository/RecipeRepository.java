@@ -1,5 +1,6 @@
 package com.zh.core.repository;
 
+import cn.hutool.core.util.IdUtil;
 import com.zh.core.model.Recipe;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,14 @@ import java.util.List;
 @Component
 public class RecipeRepository {
     private final List<Recipe> list = new ArrayList<>();
+    {
+        Recipe recipe = new Recipe();
+        recipe.setId("123456789");
+        recipe.setName("测试");
+        recipe.setDescription("测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试");
+        recipe.setImage("20231011141758th.jpg");
+        list.add(recipe);
+    }
     public List<Recipe> list(){
         return list;
     }

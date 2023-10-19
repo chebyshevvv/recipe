@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface PlanRecipeService {
     List<PlanRecipeQueryResultDto> list(PlanRecipeQueryParamDto dto);
+    List<PlanRecipeQueryResultDto> recommend();
     void save(PlanRecipe recipe);
     List<PlanIngredientAmountDto> todayIngredients();
 }

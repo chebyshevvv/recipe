@@ -56,6 +56,22 @@ public class PlanRecipeServiceImpl implements PlanRecipeService {
     }
 
     @Override
+    public List<PlanRecipeQueryResultDto> recommend() {
+        List<Recipe> recipes = this.recipeRepository.list();
+        List<PlanRecipeQueryResultDto> resultList = new ArrayList<>(recipes.size());
+        for (Recipe recipe : recipes) {
+            PlanRecipeQueryResultDto result = new PlanRecipeQueryResultDto();
+            result.setRecipeId(recipe.getId());
+            result.setMeal(0);
+            result.setRecipeName(recipe.getName());
+            result.setRecipeDescription(recipe.getDescription());
+            result.setRecipeImage(recipe.getImage());
+            resultList.add(result);
+        }
+        return resultList;
+    }
+
+    @Override
     public void save(PlanRecipe recipe) {
         recipe.setId(IdUtil.getSnowflakeNextIdStr());
         this.repository.save(recipe);
