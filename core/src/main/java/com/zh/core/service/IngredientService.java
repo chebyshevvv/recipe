@@ -7,4 +7,5 @@ import java.util.Map;
 
 public interface IngredientService {
     Map<String, List<Ingredient>> getMap();
+    void save(Map map);
 }
