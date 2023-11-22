@@ -11,12 +11,14 @@ import java.util.List;
 public class RecipeRepository {
     private final List<Recipe> list = new ArrayList<>();
     {
-        Recipe recipe = new Recipe();
-        recipe.setId("123456789");
-        recipe.setName("测试");
-        recipe.setDescription("测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试");
-        recipe.setImage("20231011141758th.jpg");
-        list.add(recipe);
+        for (int i = 0; i < 9; i++) {
+            Recipe recipe = new Recipe();
+            recipe.setId("123456789");
+            recipe.setName("测试");
+            recipe.setDescription("测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试");
+            recipe.setImage("20231011141758th.jpg");
+            list.add(recipe);
+        }
     }
     public List<Recipe> list(){
         return list;
