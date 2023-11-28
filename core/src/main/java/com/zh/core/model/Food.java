@@ -12,6 +12,8 @@ public class Food {
     private String description;
     private String image;
     private Integer star;
+    private Integer present;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timeLimit;
+    private LocalDateTime createTime;
 }
