@@ -2,6 +2,7 @@ package com.zh.core.service.impl;
 
 import cn.hutool.core.lang.Validator;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zh.core.model.Food;
 import com.zh.core.repository.FoodRepository;
@@ -31,7 +32,14 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public List<Food> list(Food food) {
         QueryWrapper<Food> wrapper = Wrappers.query(food);
-        wrapper.orderByDesc("time_limit","create_time");
+        wrapper.orderByAsc("time_limit is null","time_limit","create_time");
         return repository.list(wrapper);
+    }
+
+    @Override
+    public void remove(String id) {
+        UpdateWrapper<Food> wrapper = Wrappers.update();
+        wrapper.set("present",0).eq("id",id);
+        repository.update(wrapper);
     }
 }

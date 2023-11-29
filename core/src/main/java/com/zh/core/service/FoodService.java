@@ -7,4 +7,5 @@ import java.util.List;
 public interface FoodService {
     void save(Food food);
     List<Food> list(Food food);
+    void remove(String id);
 }
